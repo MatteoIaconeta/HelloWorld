@@ -18,18 +18,15 @@ namespace HelloWorld
 
             slider.Value = 0.5;
 
-            switch (Device.RuntimePlatform)
+            #region OnPlatform Obsolete
+            var x = new OnPlatform<Thickness>
             {
-                case Device.iOS:
-                    Padding = new Thickness(0, 20, 0, 0);
-                    break;
-                case Device.Android:
-                    Padding = new Thickness(10, 20, 0, 0);
-                    break;
-                case Device.UWP:
-                    Padding = new Thickness(30, 20, 0, 0);
-                    break;
-            }
+                Android = new Thickness(0),
+                iOS = new Thickness(0, 20, 0, 0)
+            };
+
+            Padding = x;
+            #endregion
         }
     }
 }
