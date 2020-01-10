@@ -17,16 +17,6 @@ namespace HelloWorld
             InitializeComponent();
 
             slider.Value = 0.5;
-
-            #region OnPlatform Obsolete
-            var x = new OnPlatform<Thickness>
-            {
-                Android = new Thickness(0),
-                iOS = new Thickness(0, 20, 0, 0)
-            };
-
-            Padding = x;
-            #endregion
         }
     }
 }
