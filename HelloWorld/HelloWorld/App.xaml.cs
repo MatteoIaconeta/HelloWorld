@@ -11,7 +11,7 @@ namespace HelloWorld
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new GridPage();
             //MainPage = new StackPage();
             //MainPage = new QuotesPage();
             //MainPage = new StackLayoutExercise1();
