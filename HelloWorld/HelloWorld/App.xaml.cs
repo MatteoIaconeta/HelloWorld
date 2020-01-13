@@ -22,7 +22,8 @@ namespace HelloWorld
             //MainPage = new AbsolutePage();
             //MainPage = new AbsoluteExercise1();
             //MainPage = new AbsoluteExercise2();
-            MainPage = new RelativePage();
+            //MainPage = new RelativePage();
+            //MainPage = new RelativeExercise();
         }
 
         protected override void OnStart()
