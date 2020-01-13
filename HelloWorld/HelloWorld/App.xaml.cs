@@ -11,14 +11,17 @@ namespace HelloWorld
         {
             InitializeComponent();
 
-            MainPage = new AbsolutePage();
-            //MainPage = new GridPage();
-            //MainPage = new StackPage();
+            //MainPage = new GreetPage();
             //MainPage = new QuotesPage();
+            //MainPage = new StackPage();
             //MainPage = new StackLayoutExercise1();
             //MainPage = new StackLayoutExercise2();
+            //MainPage = new GridPage();
             //MainPage = new GridExercise1();
             //MainPage = new GridExercise2();
+            //MainPage = new AbsolutePage();
+            //MainPage = new AbsoluteExercise1();
+            //MainPage = new AbsoluteExercise2();
         }
 
         protected override void OnStart()
