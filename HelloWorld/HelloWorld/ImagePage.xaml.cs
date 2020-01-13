@@ -16,11 +16,7 @@ namespace HelloWorld
 		{
 			InitializeComponent ();
 
-            //var imageSource = (UriImageSource)ImageSource.FromUri(new Uri("https://loremflickr.com/1080/1920"));
-            var imageSource = new UriImageSource { Uri = new Uri("https://loremflickr.com/1080/1920") };
-            imageSource.CachingEnabled = false;
-            //imageSource.CacheValidity = TimeSpan.FromHours(1);
-            image.Source = imageSource;            
+            image.Source = ImageSource.FromResource("HelloWorld.Images.background.jpg");     
 		}
 	}
 }
