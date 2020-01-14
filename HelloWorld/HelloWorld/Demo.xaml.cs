@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HelloWorld.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,14 +17,11 @@ namespace HelloWorld
 		{
 			InitializeComponent ();
 
-            var names = new List<string>
+            listView.ItemsSource = new List<Contact>
             {
-                "Mosh",
-                "John",
-                "Bob"
+                new Contact { Name = "Mosh", ImageUrl = "https://i.picsum.photos/id/1/100/100.jpg"},
+                new Contact { Name = "John", ImageUrl = "https://i.picsum.photos/id/2/100/100.jpg", Status = "Hey, let's talk" },
             };
-
-            listView.ItemsSource = names;
 		}
 	}
 }
