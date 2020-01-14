@@ -16,7 +16,21 @@ namespace HelloWorld
 		{
 			InitializeComponent ();
 
-            //image.Source = ImageSource.FromResource("HelloWorld.Images.background.jpg");     
+            //btn.ImageSource = ImageSource.FromFile("clock.png");
+            var imageSource = "";
+            switch (Device.RuntimePlatform)
+            {
+                case Device.iOS:
+                    imageSource = "clock.png";
+                    break;
+                case Device.Android:
+                    imageSource = "clock.png";
+                    break;
+                case Device.UWP:
+                    imageSource = "Images/clock.png";
+                    break;
+            }
+            btn.ImageSource = ImageSource.FromFile(imageSource);
 		}
 	}
 }
