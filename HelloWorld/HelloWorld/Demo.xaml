@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="HelloWorld.Demo"
              Padding="0, 20, 0, 0">
-    <ListView x:Name="listView" IsGroupingEnabled="True" GroupDisplayBinding="{Binding Title}" GroupShortNameBinding="{Binding ShortTitle}">
+    <ListView x:Name="listView"
+        ItemTapped="ListView_ItemTapped"
+        ItemSelected="ListView_ItemSelected">
         <ListView.ItemTemplate>
             <DataTemplate>
                 <TextCell Text="{Binding Name}" TextColor="Black" Detail="{Binding Status}" DetailColor="Gray"/>
