@@ -3,11 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="HelloWorld.Demo"
              Padding="0, 20, 0, 0">
-    <ListView x:Name="listView" IsPullToRefreshEnabled="True" Refreshing="ListView_Refreshing">
+    <StackLayout>
+        <SearchBar Placeholder="Search..." TextChanged="SearchBar_TextChanged"/> <!--SearchButtonPressed="SearchBar_SearchButtonPressed"-->        
+        <ListView x:Name="listView">
         <ListView.ItemTemplate>
             <DataTemplate>
                 <TextCell Text="{Binding Name}" TextColor="Black" Detail="{Binding Status}" DetailColor="Gray" />
             </DataTemplate>
         </ListView.ItemTemplate>
     </ListView>
+    </StackLayout>
 </ContentPage>

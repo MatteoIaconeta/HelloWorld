@@ -21,20 +21,23 @@ namespace HelloWorld
             listView.ItemsSource = GetContacts();
 		}
 
-        List<Contact> GetContacts()
+        IEnumerable<Contact> GetContacts(string searchText = null)
         {
-            return new List<Contact>
+            var contacts = new List<Contact>
             {
                 new Contact { Name = "Mosh", ImageUrl = "https://i.picsum.photos/id/1/100/100.jpg"},
                 new Contact { Name = "John", ImageUrl = "https://i.picsum.photos/id/2/100/100.jpg", Status = "Hey, let's talk" }
             };
+
+            if (string.IsNullOrWhiteSpace(searchText))
+                return contacts;
+
+            return contacts.Where(c => c.Name.StartsWith(searchText));
         }
 
-        private void ListView_Refreshing(object sender, EventArgs e)
+        private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
-            listView.ItemsSource = GetContacts();
-
-            listView.EndRefresh();
+            listView.ItemsSource = GetContacts(e.NewTextValue);
         }
     }
 }
