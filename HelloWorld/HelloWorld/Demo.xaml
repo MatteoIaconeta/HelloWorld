@@ -3,15 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="HelloWorld.Demo"
              Padding="0, 20, 0, 0">
-    <ListView x:Name="listView">
+    <ListView x:Name="listView" IsPullToRefreshEnabled="True" Refreshing="ListView_Refreshing">
         <ListView.ItemTemplate>
             <DataTemplate>
-                <TextCell Text="{Binding Name}" TextColor="Black" Detail="{Binding Status}" DetailColor="Gray">
-                    <TextCell.ContextActions>
-                        <MenuItem Text="Call" Clicked="Call_Clicked" CommandParameter="{Binding .}"/>
-                        <MenuItem Text="Delete" Clicked="Delete_Clicked" IsDestructive="True" CommandParameter="{Binding .}"/>
-                    </TextCell.ContextActions>
-                </TextCell>
+                <TextCell Text="{Binding Name}" TextColor="Black" Detail="{Binding Status}" DetailColor="Gray" />
             </DataTemplate>
         </ListView.ItemTemplate>
     </ListView>

@@ -14,31 +14,27 @@ namespace HelloWorld
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class Demo : ContentPage
 	{
-        private ObservableCollection<Contact> contacts;
 		public Demo ()
 		{
 			InitializeComponent ();
 
-            contacts = new ObservableCollection<Contact>
-            {
-                new Contact { Name = "Mosh", ImageUrl = "https://i.picsum.photos/id/1/100/100.jpg"},
-                new Contact { Name = "John", ImageUrl = "https://i.picsum.photos/id/2/100/100.jpg", Status = "Hey, let's talk" }                
-            };
-
-            listView.ItemsSource = contacts;
+            listView.ItemsSource = GetContacts();
 		}
 
-        private void Call_Clicked(object sender, EventArgs e)
+        List<Contact> GetContacts()
         {
-            var menuItem = sender as MenuItem;
-            var contact =  menuItem.CommandParameter as Contact;
-            DisplayAlert("Call", contact.Name, "OK");
+            return new List<Contact>
+            {
+                new Contact { Name = "Mosh", ImageUrl = "https://i.picsum.photos/id/1/100/100.jpg"},
+                new Contact { Name = "John", ImageUrl = "https://i.picsum.photos/id/2/100/100.jpg", Status = "Hey, let's talk" }
+            };
         }
 
-        private void Delete_Clicked(object sender, EventArgs e)
+        private void ListView_Refreshing(object sender, EventArgs e)
         {
-            var contact = (sender as MenuItem).CommandParameter as Contact;
-            contacts.Remove(contact);
+            listView.ItemsSource = GetContacts();
+
+            listView.EndRefresh();
         }
     }
 }
