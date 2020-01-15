@@ -17,10 +17,16 @@ namespace HelloWorld
 		{
 			InitializeComponent ();
 
-            listView.ItemsSource = new List<Contact>
+            listView.ItemsSource = new List<ContactGroup>
             {
-                new Contact { Name = "Mosh", ImageUrl = "https://i.picsum.photos/id/1/100/100.jpg"},
-                new Contact { Name = "John", ImageUrl = "https://i.picsum.photos/id/2/100/100.jpg", Status = "Hey, let's talk" },
+                new ContactGroup("M", "M")
+                {
+                    new Contact { Name = "Mosh", ImageUrl = "https://i.picsum.photos/id/1/100/100.jpg"},
+                },
+                new ContactGroup("J", "J")
+                {
+                    new Contact { Name = "John", ImageUrl = "https://i.picsum.photos/id/2/100/100.jpg", Status = "Hey, let's talk" }
+                }                
             };
 		}
 	}
