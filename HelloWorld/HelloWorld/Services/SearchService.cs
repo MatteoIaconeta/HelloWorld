@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-namespace HelloWorld.Service
+namespace HelloWorld.Services
 {
     public class SearchService
     {
