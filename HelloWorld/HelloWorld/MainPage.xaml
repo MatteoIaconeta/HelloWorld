@@ -1,13 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+<CarouselPage xmlns="http://xamarin.com/schemas/2014/forms"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-            x:Class="HelloWorld.MainPage"
-            xmlns:local="clr-namespace:HelloWorld">
-    <local:ContactsPage Title="Contacts" />
-    <NavigationPage Title="Page1">
-        <x:Arguments>
-            <local:ContentPage1 Title="Page1"/>
-        </x:Arguments>
-    </NavigationPage>
-    <!-- è presente un bug in Android che se inserisco un altro oggetto di tipo ContentPage l'app restituisce Java.Lang.NullPointerException -->
-</TabbedPage>
+            x:Class="HelloWorld.MainPage">
+    <ContentPage>
+        <Label Text="Content of Page1" HorizontalOptions="Center" VerticalOptions="Center" />
+    </ContentPage>
+    <ContentPage>
+        <Label Text="Content of Page2" HorizontalOptions="Center" VerticalOptions="Center" />
+    </ContentPage>
+</CarouselPage>
