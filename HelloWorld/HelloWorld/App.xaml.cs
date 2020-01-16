@@ -28,11 +28,12 @@ namespace HelloWorld
             //MainPage = new Demo();
             //MainPage = new ImageExercise();
             //MainPage = new ListExercise();
-            MainPage = new NavigationPage(new WelcomePage())
-            {
-                BarBackgroundColor = Color.Gray,
-                BarTextColor = Color.White
-            };
+            //MainPage = new NavigationPage(new WelcomePage())
+            //{
+            //    BarBackgroundColor = Color.Gray,
+            //    BarTextColor = Color.White
+            //};
+            MainPage = new NavigationPage(new ContactsPage());
         }
 
         protected override void OnStart()
