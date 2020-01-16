@@ -1,14 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="HelloWorld.ContactsPage"
-             Padding="0, 20, 0, 0"
+             IsPresented="True">
+    <MasterDetailPage.Master>
+        <ContentPage Padding="0, 20, 0, 0"
              Title="Contacts">
-    <ListView x:Name="listView" ItemSelected="ListView_ItemSelected">
-        <ListView.ItemTemplate>
-            <DataTemplate>
-                <TextCell Text="{Binding Name}" Detail="{Binding Status}" />
-            </DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView>
-</ContentPage>
+            <ListView x:Name="listView" ItemSelected="ListView_ItemSelected">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding Name}" Detail="{Binding Status}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ContentPage>
+    </MasterDetailPage.Master>
+    <MasterDetailPage.Detail>
+        <ContentPage />
+    </MasterDetailPage.Detail>
+</MasterDetailPage>
