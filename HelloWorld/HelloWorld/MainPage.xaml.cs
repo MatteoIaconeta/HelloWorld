@@ -15,5 +15,15 @@ namespace HelloWorld
         {
             InitializeComponent();
         }
+
+        //private void Entry_Completed(object sender, EventArgs e)
+        //{
+        //    label.Text = "Completed";
+        //}
+
+        //private void Entry_TextChanged(object sender, TextChangedEventArgs e)
+        //{
+        //    label.Text = e.NewTextValue;
+        //}
     }
 }
