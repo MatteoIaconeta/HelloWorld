@@ -11,6 +11,17 @@
                 <SwitchCell Text="Notifications" On="True" />
                 <local:DateCell Label="Starts" Date="1 Jan 2016"/>
                 <local:DateCell Label="Ends" Date="31 Dec 2016"/>
+                <ViewCell Tapped="ViewCell_Tapped">
+                    <StackLayout Orientation="Horizontal" Padding="13, 5">
+                        <Label Text="Contact Method" VerticalOptions="Center" />
+                        <Label 
+							x:Name="contactMethod"
+							VerticalOptions="Center" 
+							HorizontalOptions="EndAndExpand" 
+							Text="None" 
+							TextColor="Gray" />
+                    </StackLayout>
+                </ViewCell>
             </TableSection>
         </TableRoot>
     </TableView>
