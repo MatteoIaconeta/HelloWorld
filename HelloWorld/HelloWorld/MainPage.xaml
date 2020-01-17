@@ -1,12 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-            x:Class="HelloWorld.MainPage"
-             xmlns:sys="clr-namespace:System;assembly=mscorlib"
-            Padding="40">
-    <StackLayout>
-        <DatePicker Date="{x:Static sys:DateTime.Today}" Format="d MMM yyyy" DateSelected="DatePicker_DateSelected"/>
-        <!--MinimumDate="1 Jan 2016" MaximumDate="30 Jan 2016"-->
-        <TimePicker Time="{x:Static sys:DateTime.Now}" />
-    </StackLayout>
+            x:Class="HelloWorld.MainPage">
+    <TableView Intent="Form">
+        <TableRoot>
+            <TableSection Title="Basics">
+                <TextCell Text="Name" Detail="Mosh Hamedani" />
+                <EntryCell Label="Title" Placeholder="(eg Shopping)" />
+                <SwitchCell Text="Notifications" On="True" />
+            </TableSection>
+        </TableRoot>
+    </TableView>
 </ContentPage>

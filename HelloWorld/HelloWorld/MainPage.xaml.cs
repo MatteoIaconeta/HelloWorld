@@ -15,10 +15,5 @@ namespace HelloWorld
         {
             InitializeComponent();
         }
-
-        private void DatePicker_DateSelected(object sender, DateChangedEventArgs e)
-        {
-            //e.NewDate & e.OldDate
-        }
     }
 }
