@@ -15,10 +15,5 @@ namespace HelloWorld
         {
             InitializeComponent();
         }
-
-        private void Slider_ValueChanged(object sender, ValueChangedEventArgs e)
-        {
-            //e.NewValue && e.OldValue;
-        }
     }
 }

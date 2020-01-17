@@ -4,8 +4,7 @@
             x:Class="HelloWorld.MainPage"
             Padding="40">
     <StackLayout>
-        <!-- per alzare il valore di Minimum, bisogna cambiare invertire tra Max e Min -->
-        <Slider x:Name="slider" Minimum="0" Maximum="255" ValueChanged="Slider_ValueChanged" /> 
-        <Label Text="{Binding Source={x:Reference slider}, Path=Value, StringFormat='{0:N0}'}" />
+        <Stepper x:Name="stepper" Increment="5" />
+        <Label Text="{Binding Source={x:Reference stepper}, Path=Value}" />
     </StackLayout>
     </ContentPage>
