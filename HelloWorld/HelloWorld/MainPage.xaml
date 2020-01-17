@@ -3,13 +3,12 @@
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             x:Class="HelloWorld.MainPage"
             Padding="40">
-<!--<StackLayout>
-        <Entry Keyboard="Numeric" Placeholder="Phone" TextChanged="Entry_TextChanged"/>
-        <Entry Keyboard="Email" Placeholder="Email"/>
-        <Entry Keyboard="Text" IsPassword="True" Placeholder="Password" Completed="Entry_Completed" />
-        <Label x:Name="label" />
-    </StackLayout>-->
-    <StackLayout BackgroundColor="Gray">
-        <Editor BackgroundColor="Yellow" VerticalOptions="FillAndExpand"/>
+    <StackLayout>
+        <Picker x:Name="picker"  Title="Contact Method" SelectedIndexChanged="Picker_SelectedIndexChanged">
+            <!--<Picker.Items>
+                <x:String>SMS</x:String>
+                <x:String>Email</x:String>
+            </Picker.Items>-->
+        </Picker>
     </StackLayout>
 </ContentPage>
