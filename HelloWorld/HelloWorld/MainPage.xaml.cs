@@ -16,12 +16,7 @@ namespace HelloWorld
         {
             InitializeComponent();
 
-            BindingContext = Application.Current;
-        }
-
-        protected override void OnDisappearing()
-        {
-            base.OnDisappearing();
+            var fileSystem = DependencyService.Get<IFileSystem>();            
         }
     }
 }

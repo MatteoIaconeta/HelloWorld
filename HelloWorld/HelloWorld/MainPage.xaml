@@ -1,14 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-            x:Class="HelloWorld.MainPage"
-             xmlns:local="clr-namespace:HelloWorld.Extensions">
-    <TableView Intent="Form">
-        <TableRoot>
-            <TableSection>
-                <EntryCell Text="{Binding Title}" Label="Title" Placeholder="(eg Shopping)" />
-                <SwitchCell Text="Notifications" On="{Binding NotificationsEnabled}" />
-            </TableSection>
-        </TableRoot>
-    </TableView>
+            x:Class="HelloWorld.MainPage">
 </ContentPage>
