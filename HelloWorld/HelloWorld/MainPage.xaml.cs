@@ -15,17 +15,24 @@ namespace HelloWorld
         public MainPage()
         {
             InitializeComponent();
+
+            if (Application.Current.Properties.ContainsKey("Name"))
+                title.Text = Application.Current.Properties["Name"].ToString();
+            if (Application.Current.Properties.ContainsKey("NotificationsEnabled"))
+                notificationsEnabled.On = (bool)Application.Current.Properties["NotificationsEnabled"];
         }
 
-        private void ViewCell_Tapped(object sender, EventArgs e)
+        protected override void OnDisappearing()
         {
-            var page = new ContactMethodsPage();
-            page.ContactMethods.ItemSelected += (source, args) => 
-            {
-                contactMethod.Text = args.SelectedItem.ToString();
-                Navigation.PopAsync();
-            };
-            Navigation.PushAsync(page);
+            base.OnDisappearing();
+        }
+
+        private void OnChange(object sender, EventArgs e)
+        {
+            Application.Current.Properties["Name"] = title.Text;
+            Application.Current.Properties["NotificationsEnabled"] = notificationsEnabled.On;
+
+            //Application.Current.SavePropertiesAsync();
         }
     }
 }

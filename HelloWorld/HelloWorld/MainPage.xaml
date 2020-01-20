@@ -5,23 +5,9 @@
              xmlns:local="clr-namespace:HelloWorld.Extensions">
     <TableView Intent="Form">
         <TableRoot>
-            <TableSection Title="Basics">
-                <TextCell Text="Name" Detail="Mosh Hamedani" />
-                <EntryCell Label="Title" Placeholder="(eg Shopping)" />
-                <SwitchCell Text="Notifications" On="True" />
-                <local:DateCell Label="Starts" Date="1 Jan 2016"/>
-                <local:DateCell Label="Ends" Date="31 Dec 2016"/>
-                <ViewCell Tapped="ViewCell_Tapped">
-                    <StackLayout Orientation="Horizontal" Padding="13, 5">
-                        <Label Text="Contact Method" VerticalOptions="Center" />
-                        <Label 
-							x:Name="contactMethod"
-							VerticalOptions="Center" 
-							HorizontalOptions="EndAndExpand" 
-							Text="None" 
-							TextColor="Gray" />
-                    </StackLayout>
-                </ViewCell>
+            <TableSection>
+                <EntryCell x:Name="title" Text="{Binding Title}" Label="Title" Placeholder="(eg Shopping)" Completed="OnChange" />
+                <SwitchCell x:Name="notificationsEnabled"  Text="Notifications" On="{Binding NotificationsEnabled}" OnChanged="OnChange" />
             </TableSection>
         </TableRoot>
     </TableView>
