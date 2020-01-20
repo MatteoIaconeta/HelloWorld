@@ -14,7 +14,7 @@ namespace HelloWorld
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class Demo : ContentPage
 	{
-		public Demo ()
+		/*public Demo ()
 		{
 			InitializeComponent ();
 
@@ -38,6 +38,6 @@ namespace HelloWorld
         private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
             listView.ItemsSource = GetContacts(e.NewTextValue);
-        }
+        }*/
     }
 }

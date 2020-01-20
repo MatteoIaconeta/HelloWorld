@@ -4,7 +4,8 @@
              x:Class="HelloWorld.Demo"
              Padding="0, 20, 0, 0">
     <StackLayout>
-        <SearchBar Placeholder="Search..." TextChanged="SearchBar_TextChanged"/> <!--SearchButtonPressed="SearchBar_SearchButtonPressed"-->        
+        <SearchBar Placeholder="Search..." />
+        <!--TextChanged="SearchBar_TextChanged" SearchButtonPressed="SearchBar_SearchButtonPressed"-->        
         <ListView x:Name="listView">
         <ListView.ItemTemplate>
             <DataTemplate>
