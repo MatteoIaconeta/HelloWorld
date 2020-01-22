@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorld.Android", "Hello
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorld.UWP", "HelloWorld\HelloWorld.UWP\HelloWorld.UWP.csproj", "{C1CCFB47-A8C5-4388-9493-5301C20C388D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorld", "HelloWorld\HelloWorld\HelloWorld.csproj", "{8392A551-EDAC-4E43-BB09-756CFE1EC011}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloWorld", "HelloWorld\HelloWorld\HelloWorld.csproj", "{8392A551-EDAC-4E43-BB09-756CFE1EC011}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

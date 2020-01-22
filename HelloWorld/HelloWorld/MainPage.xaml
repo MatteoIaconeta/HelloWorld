@@ -8,10 +8,10 @@
             <Button Text="Update" Clicked="OnUpdate" HorizontalOptions="CenterAndExpand" />
             <Button Text="Delete" Clicked="OnDelete" />
         </StackLayout>
-        <ListView x:Name="recipesListView">
+        <ListView x:Name="postsListView">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextCell Text="{Binding Name}" />
+                    <TextCell Text="{Binding Title}" />
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

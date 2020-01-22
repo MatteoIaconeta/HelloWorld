@@ -1,14 +1,11 @@
-﻿using HelloWorld.Extensions;
-using HelloWorld.Persistence;
+﻿using Newtonsoft.Json;
 using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -16,79 +13,73 @@ namespace HelloWorld
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
 
-    public class Recipe : INotifyPropertyChanged
+    public class Post : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        private string _title;
 
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-
-        private string _name;
         [MaxLength(255)]
-        public string Name
+        public string Title
         {
-            get { return _name; }
+            get { return _title; }
             set
             {
-                if (_name == value)
+                if (_title == value)
                     return;
-                _name = value;
-                //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Name)));
-                OnPropertyChanged(new PropertyChangedEventArgs(nameof(Name)));
-                //OnPropertyChanged();
+                _title = value;
+                OnPropertyChanged();
             }
         }
+        public string Body { get; set; }
 
-        //private void OnPropertyChanged([CallerMemberName]string propertyName = null)
-        //{
-        //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(propertyName)));
-        //}
-
-        private void OnPropertyChanged(PropertyChangedEventArgs e)
+        public void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            PropertyChanged?.Invoke(this, e);
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 
     public partial class MainPage : ContentPage
     {
-        private SQLiteAsyncConnection connection;
-        private ObservableCollection<Recipe> recipes;
+        private const string Url = "https://jsonplaceholder.typicode.com/posts";
+        private HttpClient client = new HttpClient();
+        private ObservableCollection<Post> posts;
+
         public MainPage()
         {
             InitializeComponent();
-
-            connection = DependencyService.Get<ISQLiteDb>().GetConnection();
         }
 
         protected override async void OnAppearing()
         {
-            await connection.CreateTableAsync<Recipe>();
-            recipes = new ObservableCollection<Recipe>(await connection.Table<Recipe>().ToListAsync());
-            recipesListView.ItemsSource = recipes;
-
+            var content = await client.GetStringAsync(Url);
+            posts = new ObservableCollection<Post>(JsonConvert.DeserializeObject<List<Post>>(content));
+            postsListView.ItemsSource = posts;
             base.OnAppearing();
         }
 
         private async void OnAdd(object sender, EventArgs e)
         {
-            var recipe = new Recipe { Name = "Recipe " + DateTime.Now.Ticks };
-            await connection.InsertAsync(recipe);
-            recipes.Add(recipe);
+            var post = new Post { Title = "Title " + DateTime.Now.Ticks };
+            posts.Insert(0, post);
+            var content = JsonConvert.SerializeObject(post);
+            await client.PostAsync(Url, new StringContent(content));
         }
 
         private async void OnUpdate(object sender, EventArgs e)
         {
-            var recipe = recipes[0];
-            recipe.Name += " UPDATED";
-            await connection.UpdateAsync(recipe);
+            var post = posts[0];
+            post.Title += " UPDATED";
+            var content = JsonConvert.SerializeObject(post);
+            await client.PutAsync(Url + "/" + post.Id, new StringContent(content));
         }
 
         private async void OnDelete(object sender, EventArgs e)
         {
-            var recipe = recipes[0];
-            await connection.DeleteAsync(recipe);
-            recipes.Remove(recipe);
+            var post = posts[0];
+            posts.Remove(post);
+            await client.DeleteAsync(Url + "/" + post.Id);
         }
     }
 }
