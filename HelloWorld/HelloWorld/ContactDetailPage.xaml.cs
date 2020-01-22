@@ -1,4 +1,6 @@
 ﻿using HelloWorld.Models;
+using HelloWorld.Persistence;
+using SQLite;
 using System;
 
 using Xamarin.Forms;
@@ -12,12 +14,16 @@ namespace HelloWorld
         public event EventHandler<Contact> ContactAdded;
         public event EventHandler<Contact> ContactUpdated;
 
+        private SQLiteAsyncConnection connection;
+
         public ContactDetailPage (Contact contact)
 		{
             if (contact == null)
                 throw new ArgumentNullException(nameof(contact));
 
 			InitializeComponent ();
+
+            connection = DependencyService.Get<ISQLiteDb>().GetConnection();
 
             BindingContext = new Contact
             {
@@ -42,11 +48,12 @@ namespace HelloWorld
 
             if (contact.Id == 0)
             {
-                contact.Id = 1;
+                await connection.InsertAsync(contact);
                 ContactAdded?.Invoke(this, contact);
             }
             else
             {
+                await connection.UpdateAsync(contact);
                 ContactUpdated?.Invoke(this, contact);
             }
 

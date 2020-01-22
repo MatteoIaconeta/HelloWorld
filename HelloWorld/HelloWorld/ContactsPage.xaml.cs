@@ -1,4 +1,6 @@
 ﻿using HelloWorld.Models;
+using HelloWorld.Persistence;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,18 +16,33 @@ namespace HelloWorld
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class ContactsPage : ContentPage
 	{
-        private ObservableCollection<Contact> contacts = new ObservableCollection<Contact>
-        {
-            new Contact { Id = 1, FirstName = "John", LastName = "Smith", Email = "john@smith.com", Phone = "1111" },
-            new Contact { Id = 1, FirstName = "Mary", LastName = "Johnson", Email = "mary@johnson.com", Phone = "2222" }
-        };
+        private ObservableCollection<Contact> contacts;
+        private SQLiteAsyncConnection connection;
+        private bool IsDataLoaded;
 
 		public ContactsPage ()
 		{
 			InitializeComponent ();
 
-            listView.ItemsSource = contacts;
+            connection = DependencyService.Get<ISQLiteDb>().GetConnection();
 		}
+
+        protected override async void OnAppearing()
+        {
+            if (IsDataLoaded)
+                return;
+            IsDataLoaded = true;
+            await LoadData();
+
+            base.OnAppearing();
+        }
+
+        private async Task LoadData()
+        {
+            await connection.CreateTableAsync<Contact>();
+            contacts = new ObservableCollection<Contact>(await connection.Table<Contact>().ToListAsync());
+            contactsListView.ItemsSource = contacts;
+        }
 
         async private void OnAddContact(object sender, EventArgs e)
         {
@@ -40,12 +57,12 @@ namespace HelloWorld
 
         async private void OnContactSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            if (listView.SelectedItem == null)
+            if (contactsListView.SelectedItem == null)
                 return;
 
             var selectedContact = e.SelectedItem as Contact;
 
-            listView.SelectedItem = null;
+            contactsListView.SelectedItem = null;
 
             var page = new ContactDetailPage(selectedContact);
             page.ContactUpdated += (source, contact) =>
@@ -65,7 +82,10 @@ namespace HelloWorld
         {
             var contact = (sender as MenuItem).CommandParameter as Contact;
             if (await DisplayAlert("Warning", $"Are you sure you want to delete {contact.FullName}?", "Yes", "No"))
+            {
                 contacts.Remove(contact);
+                await connection.DeleteAsync(contact);
+            }                
         }
     }
 }
