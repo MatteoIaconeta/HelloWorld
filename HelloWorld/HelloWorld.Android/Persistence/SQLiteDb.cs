@@ -1,18 +1,21 @@
-﻿using HelloWorld.Droid.Persistence;
-using HelloWorld.Persistence;
-using SQLite;
+﻿using System;
 using System.IO;
+using SQLite;
 using Xamarin.Forms;
+using HelloWorld.Droid;
+using HelloWorld.Persistence;
 
 [assembly: Dependency(typeof(SQLiteDb))]
-namespace HelloWorld.Droid.Persistence
+
+namespace HelloWorld.Droid
 {
     public class SQLiteDb : ISQLiteDb
     {
         public SQLiteAsyncConnection GetConnection()
         {
-            var documentsPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
+            var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             var path = Path.Combine(documentsPath, "MySQLite.db3");
+
             return new SQLiteAsyncConnection(path);
         }
     }
