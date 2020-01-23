@@ -6,10 +6,15 @@ using System.Text;
 
 namespace HelloWorld.ViewModels
 {
-    public class PlaylistsViewModel
+    public class PlaylistsViewModel : BaseViewModel
     {
         public ObservableCollection<Playlist> Playlists { get; private set; } = new ObservableCollection<Playlist>();
-        public Playlist SelectedPlaylist { get; set; }
+        private Playlist _selectedPlaylist;
+        public Playlist SelectedPlaylist
+        {
+            get { return _selectedPlaylist; }
+            set { SetValue(ref _selectedPlaylist, value); }
+        }
 
         public void AddPlaylist()
         {
