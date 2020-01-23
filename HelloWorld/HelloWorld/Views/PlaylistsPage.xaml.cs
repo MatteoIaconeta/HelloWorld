@@ -1,4 +1,5 @@
 ﻿using HelloWorld.Models;
+using HelloWorld.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,34 +15,25 @@ namespace HelloWorld
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class PlaylistPage : ContentPage
 	{
-        private ObservableCollection<Playlist> playlists = new ObservableCollection<Playlist>();
 		public PlaylistPage ()
 		{
 			InitializeComponent ();
+            BindingContext = new PlaylistsViewModel();
 		}
 
         protected override void OnAppearing()
         {
-            playlistsListView.ItemsSource = playlists;
             base.OnAppearing();
         }
 
         private void OnAddPlaylist(object sender, EventArgs e)
         {
-            var newPlaylist = "Playlist " + (playlists.Count + 1);
-            playlists.Add(new Playlist { Title = newPlaylist });
-            Title = $"{playlists.Count} Playlists";
+            (BindingContext as PlaylistsViewModel).AddPlaylist();
         }
 
         private void OnPlaylistSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            if (e.SelectedItem == null)
-                return;
-            var playlist = e.SelectedItem as Playlist;
-            playlist.IsFavorite = !playlist.IsFavorite;
-            playlistsListView.SelectedItem = null;
-
-            //await Navigation.PushAsync(new PlaylistDetailPage(playlist));
+            (BindingContext as PlaylistsViewModel).SelectPlaylist(e.SelectedItem as Playlist);
         }
     }
 }
