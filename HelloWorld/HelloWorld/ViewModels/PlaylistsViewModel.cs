@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace HelloWorld.ViewModels
 {
@@ -18,13 +20,15 @@ namespace HelloWorld.ViewModels
             set { SetValue(ref _selectedPlaylist, value); }
         }
 
+        public ICommand AddPlaylistCommand { get; private set; }
         private readonly IPageService _pageService;
         public PlaylistsViewModel(IPageService pageService)
         {
             _pageService = pageService;
+            AddPlaylistCommand = new Command(AddPlaylist);
         }
 
-        public void AddPlaylist()
+        private void AddPlaylist()
         {
             var newPlaylist = "Playlist " + (Playlists.Count + 1);
             Playlists.Add(new PlaylistViewModel { Title = newPlaylist });
