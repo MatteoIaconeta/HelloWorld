@@ -18,7 +18,7 @@ namespace HelloWorld
 		public PlaylistPage ()
 		{
 			InitializeComponent ();
-            BindingContext = new PlaylistsViewModel(new PageService());
+            ViewModel = new PlaylistsViewModel(new PageService());
 		}
 
         protected override void OnAppearing()
@@ -26,14 +26,15 @@ namespace HelloWorld
             base.OnAppearing();
         }
 
-        private void OnAddPlaylist(object sender, EventArgs e)
-        {
-            (BindingContext as PlaylistsViewModel).AddPlaylist();
-        }
-
         private void OnPlaylistSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            (BindingContext as PlaylistsViewModel).SelectPlaylist(e.SelectedItem as PlaylistViewModel);
+            ViewModel.SelectPlaylistCommand.Execute(e.SelectedItem);
+        }
+
+        public PlaylistsViewModel ViewModel
+        {
+            get { return BindingContext as PlaylistsViewModel; }
+            set { BindingContext = value; }
         }
     }
 }

@@ -21,11 +21,13 @@ namespace HelloWorld.ViewModels
         }
 
         public ICommand AddPlaylistCommand { get; private set; }
+        public ICommand SelectPlaylistCommand { get; private set; }
         private readonly IPageService _pageService;
         public PlaylistsViewModel(IPageService pageService)
         {
             _pageService = pageService;
             AddPlaylistCommand = new Command(AddPlaylist);
+            SelectPlaylistCommand = new Command<PlaylistViewModel>(async vm => await SelectPlaylist(vm));
         }
 
         private void AddPlaylist()
@@ -34,7 +36,7 @@ namespace HelloWorld.ViewModels
             Playlists.Add(new PlaylistViewModel { Title = newPlaylist });
         }
 
-        public async Task SelectPlaylist(PlaylistViewModel playlist)
+        private async Task SelectPlaylist(PlaylistViewModel playlist)
         {
             if (playlist == null)
                 return;
