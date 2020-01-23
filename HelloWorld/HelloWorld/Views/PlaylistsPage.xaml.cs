@@ -18,7 +18,7 @@ namespace HelloWorld
 		public PlaylistPage ()
 		{
 			InitializeComponent ();
-            BindingContext = new PlaylistsViewModel();
+            BindingContext = new PlaylistsViewModel(new PageService());
 		}
 
         protected override void OnAppearing()

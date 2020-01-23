@@ -1,4 +1,5 @@
 ﻿using HelloWorld.Models;
+using HelloWorld.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +14,8 @@ namespace HelloWorld.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class PlaylistDetailPage : ContentPage
 	{
-        private Playlist _playlist;
-		public PlaylistDetailPage (Playlist playlist)
+        private PlaylistViewModel _playlist;
+		public PlaylistDetailPage (PlaylistViewModel playlist)
 		{
             InitializeComponent ();
 
