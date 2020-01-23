@@ -33,8 +33,9 @@ namespace HelloWorld
             //    BarBackgroundColor = Color.Gray,
             //    BarTextColor = Color.White
             //};
-            MainPage = new NavigationPage(new ContactsPage());
+            //MainPage = new NavigationPage(new ContactsPage());
             //MainPage = new MainPage();
+            MainPage = new NavigationPage(new PlaylistPage());
         }
 
         protected override void OnStart()
