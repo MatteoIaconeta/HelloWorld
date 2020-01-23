@@ -33,7 +33,7 @@ namespace HelloWorld
 
         private void OnPlaylistSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            (BindingContext as PlaylistsViewModel).SelectPlaylist(e.SelectedItem as Playlist);
+            (BindingContext as PlaylistsViewModel).SelectPlaylist(e.SelectedItem as PlaylistViewModel);
         }
     }
 }
