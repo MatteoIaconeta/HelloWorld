@@ -22,5 +22,11 @@ namespace HelloWorld
             //Resources = new ResourceDictionary();
             //Resources["borderRadius"] = 20;
         }
+
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            var rand = new Random();
+            Resources["buttonBackgroundColor"] = Color.FromRgb(rand.Next(255), rand.Next(255), rand.Next(255));
+        }
     }
 }
