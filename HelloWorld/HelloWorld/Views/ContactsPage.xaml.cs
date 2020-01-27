@@ -1,5 +1,6 @@
 ﻿using HelloWorld.Models;
 using HelloWorld.Persistence;
+using HelloWorld.ViewModels;
 using SQLite;
 using System;
 using System.Collections.Generic;
@@ -14,78 +15,33 @@ using Xamarin.Forms.Xaml;
 namespace HelloWorld
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class ContactsPage : ContentPage
-	{
-        private ObservableCollection<Contact> contacts;
-        private SQLiteAsyncConnection connection;
-        private bool IsDataLoaded;
-
-		public ContactsPage ()
-		{
-			InitializeComponent ();
-
-            connection = DependencyService.Get<ISQLiteDb>().GetConnection();
-		}
-
-        protected override async void OnAppearing()
+    public partial class ContactsPage : ContentPage
+    {
+        public ContactsPage()
         {
-            if (IsDataLoaded)
-                return;
-            IsDataLoaded = true;
-            await LoadData();
+            var contactStore = new SQLiteContactStore(DependencyService.Get<ISQLiteDb>());
+            var pageService = new PageService();
+            ViewModel = new ContactsPageViewModel(contactStore, pageService);
+
+            InitializeComponent();
+        }
+
+        protected override void OnAppearing()
+        {
+            ViewModel.LoadDataCommand.Execute(null);
 
             base.OnAppearing();
         }
 
-        private async Task LoadData()
+        void OnContactSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            await connection.CreateTableAsync<Contact>();
-            contacts = new ObservableCollection<Contact>(await connection.Table<Contact>().ToListAsync());
-            contactsListView.ItemsSource = contacts;
+            ViewModel.SelectContactCommand.Execute(e.SelectedItem);
         }
 
-        async private void OnAddContact(object sender, EventArgs e)
+        public ContactsPageViewModel ViewModel
         {
-            var page = new ContactDetailPage(new Contact());
-            page.ContactAdded += (source, contact) =>
-            {
-                contacts.Add(contact);
-            };
-
-            await Navigation.PushAsync(page);
-        }
-
-        async private void OnContactSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            if (contactsListView.SelectedItem == null)
-                return;
-
-            var selectedContact = e.SelectedItem as Contact;
-
-            contactsListView.SelectedItem = null;
-
-            var page = new ContactDetailPage(selectedContact);
-            page.ContactUpdated += (source, contact) =>
-            {
-                selectedContact.Id = contact.Id;
-                selectedContact.FirstName = contact.FirstName;
-                selectedContact.LastName = contact.LastName;
-                selectedContact.Phone = contact.Phone;
-                selectedContact.Email = contact.Email;
-                selectedContact.IsBlocked = contact.IsBlocked;
-            };
-
-            await Navigation.PushAsync(page);
-        }
-
-        async private void OnDeleteContact(object sender, EventArgs e)
-        {
-            var contact = (sender as MenuItem).CommandParameter as Contact;
-            if (await DisplayAlert("Warning", $"Are you sure you want to delete {contact.FullName}?", "Yes", "No"))
-            {
-                contacts.Remove(contact);
-                await connection.DeleteAsync(contact);
-            }                
+            get { return BindingContext as ContactsPageViewModel; }
+            set { BindingContext = value; }
         }
     }
 }
