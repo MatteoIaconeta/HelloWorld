@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using HelloWorld.Views;
+using Newtonsoft.Json;
 using SQLite;
 using System;
 using System.Collections.Generic;
@@ -18,15 +19,20 @@ namespace HelloWorld
         public MainPage()
         {
             InitializeComponent();
-
-            //Resources = new ResourceDictionary();
-            //Resources["borderRadius"] = 20;
         }
 
-        private void Button_Clicked(object sender, EventArgs e)
+        private void OnClick(object sender, EventArgs e)
         {
-            var rand = new Random();
-            Resources["buttonBackgroundColor"] = Color.FromRgb(rand.Next(255), rand.Next(255), rand.Next(255));
+            var page = new TargetPage();
+            //page.SliderValueChanged += OnSliderValueChanged;
+            MessagingCenter.Subscribe<TargetPage, double>(this, "SliderValueChanged", OnSliderValueChanged);
+            Navigation.PushAsync(page);
+            MessagingCenter.Unsubscribe<MainPage>(this, "SliderValueChanged");
+        }
+
+        private void OnSliderValueChanged(TargetPage source, double newValue)
+        {
+            label.Text = newValue.ToString();
         }
     }
 }

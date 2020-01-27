@@ -2,26 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             x:Class="HelloWorld.MainPage">
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <x:Int32 x:Key="borderRadius">20</x:Int32>
-            <Color x:Key="buttonBackgroundColor">Green</Color>
-            <Style TargetType="Button">
-                <Setter Property="BackgroundColor" Value="Gray" />
-                <Setter Property="TextColor" Value="White" />
-                <Setter Property="BorderRadius" Value="20" />
-                <Setter Property="FontAttributes" Value="Bold" />
-            </Style>
-            <!--<Style x:Key="primaryButton" TargetType="Button" BasedOn="{StaticResource button}">
-                <Setter Property="BackgroundColor" Value="Pink" />
-            </Style>-->
-        </ResourceDictionary>
-    </ContentPage.Resources>
-    <StackLayout Spacing="20" VerticalOptions="Center">
-        <StackLayout.Resources>
-        </StackLayout.Resources>
-        <Button Text="Login" BackgroundColor="{StaticResource buttonBackgroundColor}" />
-        <Button Text="Register" />
-        <Button Text="Change Style" Clicked="Button_Clicked" />
+    <StackLayout Spacing="20" Padding="20" VerticalOptions="Center">
+        <Label x:Name="label" />
+        <Button Text="Target Page" Clicked="OnClick" />
     </StackLayout>
 </ContentPage>
