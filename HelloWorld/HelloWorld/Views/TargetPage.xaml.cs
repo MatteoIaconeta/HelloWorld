@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HelloWorld.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,7 +21,7 @@ namespace HelloWorld.Views
 
         private void OnValueChanged(object sender, ValueChangedEventArgs e)
         {
-            MessagingCenter.Send(this, "SliderValueChanged", e.NewValue);
+            MessagingCenter.Send(this, Events.SliderValueChanged, e.NewValue);
             //SliderValueChanged?.Invoke(this, e.NewValue);
         }
     }

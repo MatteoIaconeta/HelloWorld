@@ -1,4 +1,5 @@
-﻿using HelloWorld.Views;
+﻿using HelloWorld.Models;
+using HelloWorld.Views;
 using Newtonsoft.Json;
 using SQLite;
 using System;
@@ -25,9 +26,9 @@ namespace HelloWorld
         {
             var page = new TargetPage();
             //page.SliderValueChanged += OnSliderValueChanged;
-            MessagingCenter.Subscribe<TargetPage, double>(this, "SliderValueChanged", OnSliderValueChanged);
+            MessagingCenter.Subscribe<TargetPage, double>(this, Events.SliderValueChanged, OnSliderValueChanged);
             Navigation.PushAsync(page);
-            MessagingCenter.Unsubscribe<MainPage>(this, "SliderValueChanged");
+            MessagingCenter.Unsubscribe<MainPage>(this, Events.SliderValueChanged);
         }
 
         private void OnSliderValueChanged(TargetPage source, double newValue)
