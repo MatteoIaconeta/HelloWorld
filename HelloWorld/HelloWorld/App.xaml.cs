@@ -17,7 +17,7 @@ namespace HelloWorld
             //MainPage = new StackLayoutExercise1();
             //MainPage = new StackLayoutExercise2();
             //MainPage = new GridPage();
-            //MainPage = new GridExercise1();
+            MainPage = new GridExercise1();
             //MainPage = new GridExercise2();
             //MainPage = new AbsolutePage();
             //MainPage = new AbsoluteExercise1();
@@ -34,7 +34,7 @@ namespace HelloWorld
             //    BarTextColor = Color.White
             //};
             //MainPage = new NavigationPage(new ContactsPage());
-            MainPage = new MainPage();
+            //MainPage = new MainPage();
             //MainPage = new NavigationPage(new PlaylistPage());
         }
 
