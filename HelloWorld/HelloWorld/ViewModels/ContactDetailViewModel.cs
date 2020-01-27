@@ -11,9 +11,6 @@ namespace HelloWorld.ViewModels
         private readonly IContactStore _contactStore;
         private readonly IPageService _pageService;
 
-        public event EventHandler<Contact> ContactAdded;
-        public event EventHandler<Contact> ContactUpdated;
-
         public Contact Contact { get; private set; }
 
         public ICommand SaveCommand { get; private set; }
@@ -51,12 +48,14 @@ namespace HelloWorld.ViewModels
             if (Contact.Id == 0)
             {
                 await _contactStore.AddContact(Contact);
-                ContactAdded?.Invoke(this, Contact);
+
+                MessagingCenter.Send(this, "ContactAdded", Contact);
             }
             else
             {
                 await _contactStore.UpdateContact(Contact);
-                ContactUpdated?.Invoke(this, Contact);
+
+                MessagingCenter.Send(this, "ContactUpdated", Contact);
             }
 
             await _pageService.PopAsync();

@@ -1,6 +1,8 @@
-﻿using System;
+﻿using HelloWorld.Models;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -15,11 +17,6 @@ namespace HelloWorld.ViewModels
         private IPageService _pageService;
         private bool _isDataLoaded;
 
-        // Note that I've initialized Contacts to a new ObservableCollection 
-        // here, even though we set it again later after loading contacts. 
-        // This is required because in ContactsPage we've bound list view's ItemSource
-        // to this property. Without this initialization, binding will throw a
-        // NullReferenceException. 
         public ObservableCollection<ContactViewModel> Contacts { get; private set; }
             = new ObservableCollection<ContactViewModel>();
 
@@ -43,26 +40,50 @@ namespace HelloWorld.ViewModels
             AddContactCommand = new Command(async () => await AddContact());
             SelectContactCommand = new Command<ContactViewModel>(async c => await SelectContact(c));
             DeleteContactCommand = new Command<ContactViewModel>(async c => await DeleteContact(c));
+
+            // Subscribe to events 
+            MessagingCenter.Subscribe<ContactDetailViewModel, Contact>
+                (this, "ContactAdded", OnContactAdded);
+
+            MessagingCenter.Subscribe<ContactDetailViewModel, Contact>
+            (this, "ContactUpdated", OnContactUpdated);
+        }
+
+        private void OnContactAdded(ContactDetailViewModel source, Contact contact)
+        {
+            Contacts.Add(new ContactViewModel(contact));
+        }
+
+        private void OnContactUpdated(ContactDetailViewModel source, Contact contact)
+        {
+            // Here we need to find the corresponding Contact object in our 
+            // ObservableCollection first. 
+            var contactInList = Contacts.Single(c => c.Id == contact.Id);
+
+            contactInList.Id = contact.Id;
+            contactInList.FirstName = contact.FirstName;
+            contactInList.LastName = contact.LastName;
+            contactInList.Phone = contact.Phone;
+            contactInList.Email = contact.Email;
+            contactInList.IsBlocked = contact.IsBlocked;
         }
 
         private async Task LoadData()
         {
             if (_isDataLoaded)
                 return;
-            _isDataLoaded = true; 
+
+            _isDataLoaded = true;
+
             var contacts = await _contactStore.GetContactsAsync();
+
             foreach (var c in contacts)
                 Contacts.Add(new ContactViewModel(c));
         }
 
         private async Task AddContact()
         {
-            var viewModel = new ContactDetailViewModel(new ContactViewModel(), _contactStore, _pageService);
-            viewModel.ContactAdded += (source, contact) =>
-            {
-                Contacts.Add(new ContactViewModel(contact));
-            };
-            await _pageService.PushAsync(new ContactDetailPage(viewModel));
+            await _pageService.PushAsync(new ContactDetailPage(new ContactViewModel()));
         }
 
         private async Task SelectContact(ContactViewModel contact)
@@ -72,18 +93,7 @@ namespace HelloWorld.ViewModels
 
             SelectedContact = null;
 
-            var viewModel = new ContactDetailViewModel(contact, _contactStore, _pageService);
-            viewModel.ContactUpdated += (source, updatedContact) =>
-            {
-                contact.Id = updatedContact.Id;
-                contact.FirstName = updatedContact.FirstName;
-                contact.LastName = updatedContact.LastName;
-                contact.Phone = updatedContact.Phone;
-                contact.Email = updatedContact.Email;
-                contact.IsBlocked = updatedContact.IsBlocked;
-            };
-
-            await _pageService.PushAsync(new ContactDetailPage(viewModel));
+            await _pageService.PushAsync(new ContactDetailPage(contact));
         }
 
         private async Task DeleteContact(ContactViewModel contactViewModel)
@@ -91,6 +101,7 @@ namespace HelloWorld.ViewModels
             if (await _pageService.DisplayAlert("Warning", $"Are you sure you want to delete {contactViewModel.FullName}?", "Yes", "No"))
             {
                 Contacts.Remove(contactViewModel);
+
                 var contact = await _contactStore.GetContact(contactViewModel.Id);
                 await _contactStore.DeleteContact(contact);
             }
